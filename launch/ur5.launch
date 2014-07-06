@@ -1,6 +1,8 @@
 <launch>
   <param name="robot_description"
 	 textfile="$(find ur_description)/urdf/ur5_joint_limited_robot.urdf"/>
+  <param name="srdf_description"
+	 textfile="$(find ur_description)/srdf/ur5.srdf"/>
   <node name="robot_state_publisher"
 	pkg="robot_state_publisher"
 	type="state_publisher"
