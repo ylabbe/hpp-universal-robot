@@ -43,6 +43,12 @@ INSTALL(FILES
 )
 
 INSTALL(FILES
+  ${PROJECT_SOURCE_DIR}/src/hpp/corbaserver/manipulation/ur5/robot.py
+  ${PROJECT_SOURCE_DIR}/src/hpp/corbaserver/manipulation/ur5/__init__.py
+  DESTINATION ${PYTHON_SITELIB}/hpp/corbaserver/manipulation/ur5
+)
+
+INSTALL(FILES
   ${PROJECT_SOURCE_DIR}/share/ur_description/srdf/ur5.srdf
   DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/ur_description/srdf
 )
