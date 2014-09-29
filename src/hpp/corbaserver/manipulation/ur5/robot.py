@@ -24,8 +24,8 @@ class Robot (Parent):
     urdfSuffix = "_joint_limited_robot"
     srdfSuffix = ""
 
-    def __init__ (self, robotName):
-        Parent.__init__ (self, robotName, "anchor")
+    def __init__ (self, robotName, load = True):
+        Parent.__init__ (self, robotName, "anchor", load)
         self.rightWrist = "wrist_3_joint"
         self.leftWrist  = "wrist_3_joint"
         self.endEffector = "ee_fixed_joint"
