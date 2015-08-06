@@ -20,8 +20,8 @@ from hpp.corbaserver.robot import Robot as Parent
 
 class Robot (Parent):
     packageName = "ur_description"
-    urdfName = "ur5"
-    urdfSuffix = "_joint_limited_robot"
+    urdfName = "ur5_joint_limited_robot"
+    urdfSuffix = ""
     srdfSuffix = ""
 
     def __init__ (self, robotName, load = True):

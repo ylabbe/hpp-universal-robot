@@ -50,6 +50,7 @@ INSTALL(FILES
 
 INSTALL(FILES
   ${PROJECT_SOURCE_DIR}/share/ur_description/srdf/ur5.srdf
+  ${PROJECT_SOURCE_DIR}/share/ur_description/srdf/ur5_joint_limited_robot.srdf
   DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/ur_description/srdf
 )
 
