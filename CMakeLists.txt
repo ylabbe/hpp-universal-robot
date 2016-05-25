@@ -21,6 +21,49 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 INCLUDE(cmake/base.cmake)
 INCLUDE(cmake/python.cmake)
 
+# GENERATE_URDF_FILE FILENAME EXTENSION
+# ------------------------------------
+#
+# Generate urdf ${CMAKE_CURRENT_BINARY_DIR}/${FILENAME}.${EXTENSION}
+# from xacro ${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}.xacro file.
+#
+# To trigger generation, use:
+# ADD_CUSTOM_TARGET (generate_urdf_files DEPENDS ${ALL_GENERATED_URDF})
+#
+# FILENAME : XACRO filename without the extension
+#
+# Note : If ${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}.xacro does not exists,
+#        the macros tries to configure file ${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}.xacro.in
+#
+MACRO(GENERATE_URDF_FILE FILENAME)
+  FIND_PACKAGE(catkin REQUIRED COMPONENTS xacro)
+  SET(_XACRO_FILE_ ${UR_DESCRIPTION_PREFIX}/share/ur_description/${FILENAME}.xacro)
+  IF (NOT EXISTS ${_XACRO_FILE_})
+    MESSAGE(FATAL_ERROR "cannot find \"${_XACRO_FILE_}\"")
+  ENDIF (NOT EXISTS ${_XACRO_FILE_})
+
+  SET (OUTPUT_FILE ${FILENAME})
+
+  ADD_CUSTOM_COMMAND(
+    OUTPUT ${OUTPUT_FILE}
+    COMMAND ${_xacro_py}
+    ARGS -o ${CMAKE_CURRENT_BINARY_DIR}/${OUTPUT_FILE} ${_XACRO_FILE_}
+    MAIN_DEPENDENCY ${_XACRO_FILE_}
+    COMMENT "Generating ${FILENAME} from ${_XACRO_FILE_}"
+    )
+  LIST(APPEND ALL_GENERATED_URDF ${OUTPUT_FILE})
+
+  # Clean generated files.
+  SET_PROPERTY(
+    DIRECTORY APPEND PROPERTY
+    ADDITIONAL_MAKE_CLEAN_FILES
+    ${OUTPUT_FILE}
+    )
+
+  LIST(APPEND LOGGING_WATCHED_VARIABLES ALL_GENERATED_URDF)
+ENDMACRO(GENERATE_URDF_FILE FILENAME CONFIGURE)
+
+
 SET(PROJECT_NAME hpp_universal_robot)
 SET(PROJECT_DESCRIPTION
   "Data specific to ur5 and 10 robots for hpp-corbaserver")
@@ -35,6 +78,25 @@ FIND_PACKAGE(catkin)
 CATKIN_PACKAGE()
 
 ADD_REQUIRED_DEPENDENCY ("hpp-corbaserver >= 3")
+ADD_REQUIRED_DEPENDENCY ("ur_description >= 1")
+
+# Generate urdf files from xacro files
+MAKE_DIRECTORY(urdf)
+SET(XACRO_FILES
+  urdf/ur5_joint_limited_robot.urdf
+  )
+FOREACH(it ${XACRO_FILES})
+ GENERATE_URDF_FILE (${it})
+ENDFOREACH(it)
+ADD_CUSTOM_TARGET (generate_urdf_file ALL DEPENDS ${ALL_GENERATED_URDF})
+# Install files
+SET (UR_DESCRIPTION_DATAROOTDIR ${CMAKE_INSTALL_PREFIX}/share/ur_description)
+
+INSTALL(FILES
+  ${CMAKE_BINARY_DIR}/urdf/ur5_joint_limited_robot.urdf
+  DESTINATION ${UR_DESCRIPTION_DATAROOTDIR}/urdf
+  )
+
 
 INSTALL(FILES
   ${PROJECT_SOURCE_DIR}/src/hpp/corbaserver/ur5/robot.py
