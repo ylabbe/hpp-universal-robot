@@ -23,9 +23,10 @@ class Robot (Parent):
     urdfName = "ur5_joint_limited_robot"
     urdfSuffix = ""
     srdfSuffix = ""
+    rootJointType = "anchor"
 
     def __init__ (self, compositeName, robotName, load = True,
-                  rootJointType = "anchor"):
+                  rootJointType = rootJointType):
         Parent.__init__ (self, compositeName, robotName, rootJointType, load)
         self.rightWrist = "wrist_3_joint"
         self.leftWrist  = "wrist_3_joint"
