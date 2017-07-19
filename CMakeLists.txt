@@ -111,6 +111,7 @@ INSTALL(FILES
 )
 
 INSTALL(FILES
+  ${PROJECT_SOURCE_DIR}/share/ur_description/srdf/ur3_gripper.srdf
   ${PROJECT_SOURCE_DIR}/share/ur_description/srdf/ur5.srdf
   ${PROJECT_SOURCE_DIR}/share/ur_description/srdf/ur5_joint_limited_robot.srdf
   ${PROJECT_SOURCE_DIR}/share/ur_description/srdf/ur5_gripper.srdf
@@ -118,6 +119,7 @@ INSTALL(FILES
 )
 
 INSTALL(FILES
+  ${PROJECT_SOURCE_DIR}/share/ur_description/urdf/ur3_gripper.urdf
   ${PROJECT_SOURCE_DIR}/share/ur_description/urdf/ur5_gripper.urdf
   DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/ur_description/urdf
 )
