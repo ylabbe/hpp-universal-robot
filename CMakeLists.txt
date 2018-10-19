@@ -67,7 +67,7 @@ ENDMACRO(GENERATE_URDF_FILE FILENAME CONFIGURE)
 SET(PROJECT_NAME hpp_universal_robot)
 SET(PROJECT_DESCRIPTION
   "Data specific to ur5 and 10 robots for hpp-corbaserver")
-SET(PROJECT_URL "")
+SET(PROJECT_URL "https://github.com/humanoid-path-planner/hpp_universal_robot")
 
 SETUP_PROJECT()
 
@@ -77,7 +77,6 @@ FINDPYTHON()
 FIND_PACKAGE(catkin)
 CATKIN_PACKAGE()
 
-ADD_REQUIRED_DEPENDENCY ("hpp-corbaserver >= 3")
 ADD_REQUIRED_DEPENDENCY ("ur_description >= 1")
 
 # Generate urdf files from xacro files
@@ -130,7 +129,7 @@ INSTALL(FILES
 )
 
 INSTALL(FILES
-  ${PROJECT_SOURCE_DIR}/share/rviz/config.rviz 
+  ${PROJECT_SOURCE_DIR}/share/rviz/config.rviz
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/rviz
 )
 
