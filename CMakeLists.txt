@@ -36,22 +36,19 @@ INCLUDE(cmake/python.cmake)
 #        the macros tries to configure file ${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}.xacro.in
 #
 MACRO(GENERATE_URDF_FILE FILENAME)
-  FIND_PACKAGE(catkin REQUIRED COMPONENTS xacro)
   SET(_XACRO_FILE_ ${UR_DESCRIPTION_PREFIX}/share/ur_description/${FILENAME}.xacro)
   IF (NOT EXISTS ${_XACRO_FILE_})
     MESSAGE(FATAL_ERROR "cannot find \"${_XACRO_FILE_}\"")
   ENDIF (NOT EXISTS ${_XACRO_FILE_})
 
-  SET (OUTPUT_FILE ${FILENAME})
-
   ADD_CUSTOM_COMMAND(
-    OUTPUT ${OUTPUT_FILE}
-    COMMAND ${_xacro_py}
-    ARGS -o ${CMAKE_CURRENT_BINARY_DIR}/${OUTPUT_FILE} ${_XACRO_FILE_}
+    OUTPUT ${FILENAME}
+    COMMAND "xacro"
+    ARGS -o ${FILENAME} ${_XACRO_FILE_}
     MAIN_DEPENDENCY ${_XACRO_FILE_}
     COMMENT "Generating ${FILENAME} from ${_XACRO_FILE_}"
     )
-  LIST(APPEND ALL_GENERATED_URDF ${OUTPUT_FILE})
+  LIST(APPEND ALL_GENERATED_URDF ${FILENAME})
 
   # Clean generated files.
   SET_PROPERTY(
@@ -72,10 +69,6 @@ SET(PROJECT_URL "https://github.com/humanoid-path-planner/hpp_universal_robot")
 SETUP_PROJECT()
 
 FINDPYTHON()
-
-# Catkin stuff
-FIND_PACKAGE(catkin)
-CATKIN_PACKAGE()
 
 ADD_REQUIRED_DEPENDENCY ("ur_description >= 1")
 
@@ -114,23 +107,23 @@ INSTALL(FILES
   ${PROJECT_SOURCE_DIR}/share/ur_description/srdf/ur5.srdf
   ${PROJECT_SOURCE_DIR}/share/ur_description/srdf/ur5_joint_limited_robot.srdf
   ${PROJECT_SOURCE_DIR}/share/ur_description/srdf/ur5_gripper.srdf
-  DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/ur_description/srdf
+  DESTINATION ${UR_DESCRIPTION_DATAROOTDIR}/srdf
 )
 
 INSTALL(FILES
   ${PROJECT_SOURCE_DIR}/share/ur_description/urdf/ur3_gripper.urdf
   ${PROJECT_SOURCE_DIR}/share/ur_description/urdf/ur5_gripper.urdf
-  DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/ur_description/urdf
+  DESTINATION ${UR_DESCRIPTION_DATAROOTDIR}/urdf
 )
 
 INSTALL(FILES
   ${PROJECT_SOURCE_DIR}/launch/ur5.launch
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
+  DESTINATION ${UR_DESCRIPTION_DATAROOTDIR}/launch
 )
 
 INSTALL(FILES
   ${PROJECT_SOURCE_DIR}/share/rviz/config.rviz
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/rviz
+  DESTINATION ${UR_DESCRIPTION_DATAROOTDIR}/rviz
 )
 
 SETUP_PROJECT_FINALIZE()
