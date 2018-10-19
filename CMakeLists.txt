@@ -77,7 +77,6 @@ FINDPYTHON()
 FIND_PACKAGE(catkin)
 CATKIN_PACKAGE()
 
-ADD_REQUIRED_DEPENDENCY ("hpp-corbaserver >= 3")
 ADD_REQUIRED_DEPENDENCY ("ur_description >= 1")
 
 # Generate urdf files from xacro files
@@ -130,7 +129,7 @@ INSTALL(FILES
 )
 
 INSTALL(FILES
-  ${PROJECT_SOURCE_DIR}/share/rviz/config.rviz 
+  ${PROJECT_SOURCE_DIR}/share/rviz/config.rviz
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/rviz
 )
 
