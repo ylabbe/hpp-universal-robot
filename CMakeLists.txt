@@ -67,7 +67,7 @@ ENDMACRO(GENERATE_URDF_FILE FILENAME CONFIGURE)
 SET(PROJECT_NAME hpp_universal_robot)
 SET(PROJECT_DESCRIPTION
   "Data specific to ur5 and 10 robots for hpp-corbaserver")
-SET(PROJECT_URL "")
+SET(PROJECT_URL "https://github.com/humanoid-path-planner/hpp_universal_robot")
 
 SETUP_PROJECT()
 
