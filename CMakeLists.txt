@@ -72,7 +72,7 @@ SETUP_PROJECT()
 
 FINDPYTHON()
 
-ADD_REQUIRED_DEPENDENCY ("ur_description >= 1")
+ADD_REQUIRED_DEPENDENCY ("ur_description")
 
 # Generate urdf files from xacro files
 MAKE_DIRECTORY(urdf)
